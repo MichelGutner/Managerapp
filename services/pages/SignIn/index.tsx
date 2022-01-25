@@ -8,6 +8,7 @@ import ButtonPage from '../../components/ButtonPages';
 import Auth from '@aws-amplify/auth';
 import { Alert } from 'react-native';
 
+
 const SignIn = ({ navigation, signIn: signInCb }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -48,7 +49,6 @@ const SignIn = ({ navigation, signIn: signInCb }) => {
         placeholderTextColor={Theme.color.white}
         name='account'
         size={25}
-        autoComplete='email'
         color={Theme.color.white}
       />
 
@@ -65,10 +65,10 @@ const SignIn = ({ navigation, signIn: signInCb }) => {
       <Text>{errorMessage}</Text>
       {email.length > 0 ? (
         <ButtonPage
-          onPress={signIn}
+          onPress={() => signIn()}
           title='Entrar'
           backgroundColor={undefined}
-          style={{ marginTop: 50 }} />)
+          style={styles.button} />)
         : null
       }
     </View>

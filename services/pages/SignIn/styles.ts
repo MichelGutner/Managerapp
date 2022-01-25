@@ -9,5 +9,8 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: Theme.color.background
+    },
+    button: {
+        marginTop: 50
     }
 })

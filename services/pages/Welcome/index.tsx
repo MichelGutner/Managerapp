@@ -14,7 +14,9 @@ const Welcome = ({navigation}) => {
             />
             <ButtonPage
                 title='Criar Conta'
-                backgroundColor={styles.signUp} />
+                backgroundColor={styles.signUp}
+                onPress={() => navigation.navigate('SignUp')}
+            />
         </View>
     );
 };
