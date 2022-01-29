@@ -12,5 +12,8 @@ export const styles = StyleSheet.create({
     },
     button: {
         marginTop: 50
+    },
+    errorMessage:{
+        color: Theme.color.errorMessage
     }
 })

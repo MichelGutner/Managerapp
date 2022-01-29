@@ -9,12 +9,12 @@ const Welcome = ({navigation}) => {
         <View style={styles.container}>
             <ButtonPage
                 title='Entrar'
-                backgroundColor={styles.signIn}
+                style={styles.signIn}
                 onPress={() => navigation.navigate('SignIn')}
             />
             <ButtonPage
                 title='Criar Conta'
-                backgroundColor={styles.signUp}
+                style={styles.signUp}
                 onPress={() => navigation.navigate('SignUp')}
             />
         </View>

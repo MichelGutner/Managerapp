@@ -3,9 +3,9 @@ import {
   StyleSheet, View, ActivityIndicator, Text,
 } from 'react-native';
 import Auth from '@aws-amplify/auth';
-import { NavigationContainer } from '@react-navigation/native';
 import InitialRoute from './InitialRoute';
 import Routes from './routes';
+import Home from '../pages/Home';
 
 
 class AuthLoadingScreen extends React.Component {
@@ -54,22 +54,20 @@ class AuthLoadingScreen extends React.Component {
     render() {
       const { userToken, loading } = this.state;
       const showLoadingSpinner = (!userToken && loading);
-      let view = '';
+      let Page = '';
       if (showLoadingSpinner) {
-        view = (
+        Page = (
           <View style={styles.container}>
             <ActivityIndicator size="large" color="#aaa" />
           </View>
         );
       } else if (!userToken) {
-        view = <Routes signIn={this.signIn} />;
+        Page = <Routes signIn={this.signIn} />;
       } else {
-        view = <InitialRoute signOut={this.signOut} />;
+        Page = <InitialRoute signOut={this.signOut} navigation={this.props} />;
       }
       return (
-        <NavigationContainer>
-          {view}
-        </NavigationContainer>
+        Page
       );
     }
   }
