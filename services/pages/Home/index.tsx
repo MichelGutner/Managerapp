@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FlatList, ScrollView, Text, View } from 'react-native';
+import { FlatList, ScrollView, StatusBar, Text, View } from 'react-native';
 import { CircularProgressWithChild } from 'react-native-circular-progress-indicator';
 import { Theme } from '../../../themes/color';
 import ButtonMarkets from '../../components/ButtonsMarkets';
@@ -16,6 +16,9 @@ const Home = ({ signOut, navigation }) => {
 
   return (
     <View style={styles.container}>
+      <View style={{flex: 0, backgroundColor: Theme.color.box, height: 120}}>
+
+      </View>
       <View style={{ flex: 2 }}>
         <View style={styles.boxOne}>
           <View style={styles.fatMeta}>
@@ -33,12 +36,12 @@ const Home = ({ signOut, navigation }) => {
         </View>
         <ScrollView style={styles.headerButtons}>
           <ButtonMarkets onPress={() => setModalVisible(true)} title='Mercado Livre' />
-          <ButtonMarkets style={{ marginTop: 10 }} onPress={() => setModalVisible(true)} title='Shopee' />
+          <ButtonMarkets style={{ marginTop: 10 }} onPress={() => {}} title='Shopee' />
         </ScrollView>
       </View>
       <MercadoLivrePage
         onClose={() => setModalVisible(false)}
-        visible={modalVisible} />
+        visible={modalVisible} navigation={undefined} />
     </View>
 
   );

@@ -6,15 +6,14 @@ import { Theme } from '../../../themes/color';
 
 type Props = TouchableOpacityProps & {
     title: string;
-    StylesContainer: any,
 }
 
 const width = Dimensions.get('window').width -40
 
-const ButtonMarkets = ({title, StylesContainer, ...rest}: Props) => {
+const ButtonMarkets = ({title, ...rest}: Props) => {
   return (
     <TouchableOpacity activeOpacity={0.5}{...rest} >
-        <View style={[styles.container, StylesContainer]}>
+        <View style={styles.container}>
             <Text style={styles.title}>{title}</Text>
             <Icon name="right" size={18}/>
         </View>

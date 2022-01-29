@@ -4,10 +4,10 @@ export const Theme = {
         white: '#000',
         SignIn: '#0B6490',
         errorMessage: '#FF0000',
-        box: '#DBDCE8',
+        box: '#D7D8DA',
         Green: '#00FF00',
         Grey: '	#BEBEBE',
         Blue: '#0000FF',
-        black: '#000'
+        black: '#000',
     }
 }
