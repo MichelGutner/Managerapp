@@ -25,7 +25,9 @@ const MercadoLivrePage = ({ visible, onClose, navigation, ...rest }: Props) => {
         receveid: number,
         amount: number,
         expenses: number,
-        cost: number
+        cost: number,
+        totalGain: number,
+        porcent: number
     ) => {
         const data = {
             id: Date.now(),
@@ -37,12 +39,15 @@ const MercadoLivrePage = ({ visible, onClose, navigation, ...rest }: Props) => {
             amount,
             expenses,
             cost,
+            porcent: (100 - (receveid * 100 / amount)).toFixed(2),
+            totalGain: (receveid - cost - expenses).toFixed(2),
             time: Date.now()
         }
         const updateData = [...dataBase, data]
         setDataBase(updateData)
         await AsyncStorageLib.setItem('data', JSON.stringify(updateData))
     };
+
 
     const CloseModal = () => {
         onClose();

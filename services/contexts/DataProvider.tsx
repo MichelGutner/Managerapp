@@ -13,6 +13,7 @@ const DataProvider = ({children}: any) => {
 
     useEffect(() => {
         findData()
+
     }, [])
 
     return(

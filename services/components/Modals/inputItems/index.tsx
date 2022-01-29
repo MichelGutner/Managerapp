@@ -21,7 +21,10 @@ const Items = ({ item }: Props) => {
             expenses,
             cost,
             time,
+            porcent,
+            totalGain
         } = item;
+
 
     const formatDate = ms => {
         const date = new Date(ms)
@@ -31,15 +34,6 @@ const Items = ({ item }: Props) => {
 
         return `${day}/${month}/${year}`
     }
-
-    var porcent = receveid * 100 / amount;
-    var mlPorcent = 100 - porcent;
-    var receveid2 = receveid * quantity;
-    var cost2 = cost * quantity;
-    var amount2 = amount * quantity;
-    var totalGain = receveid2 - cost2;
-
-    console.log(porcent)
 
     return (
         <View style={styles.container}>
@@ -51,10 +45,10 @@ const Items = ({ item }: Props) => {
                     <Text>{quantity}</Text>
                 </View>
                 <View style={styles.bodyValues}>
-                    <Text>Recebido R$: {(receveid * quantity).toFixed(2)}</Text>
-                    <Text>Total R$: {amount2.toFixed(2)}</Text>
-                    <Text>Porcentagem: {mlPorcent.toFixed(2)}%</Text>
-                    <Text>Total Ganho R$: {totalGain.toFixed(2)}</Text>
+                    <Text>Recebido R$: {receveid}</Text>
+                    <Text>Total R$: {amount}</Text>
+                    <Text>Porcentagem: {porcent}%</Text>
+                    <Text>Total Ganho R$: {totalGain}</Text>
                     <Text style={styles.date}>{formatDate(time)}</Text>
                 </View>
             </View>

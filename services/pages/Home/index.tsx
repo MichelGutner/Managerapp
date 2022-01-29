@@ -13,16 +13,25 @@ const Home = ({ signOut, navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { dataBase } = useData();
 
+  const profit = dataBase.map((x) => x.totalGain)
+  const newProfit = profit.reduce(function(a, b){
+    return (parseFloat(a) + parseFloat(b)).toFixed(2);
+  })
+  const amountGain = dataBase.map((x) => x.amount)
+  const newAmountGain = amountGain.reduce(function(a, b){
+    return (parseFloat(a) + parseFloat(b)).toFixed(2);
+  })
+
 
   return (
     <View style={styles.container}>
-      <View style={{flex: 0, backgroundColor: Theme.color.box, height: 120}}>
-
+      <View style={{flex: 0, backgroundColor: Theme.color.box, height: 120, alignItems: 'center', justifyContent: 'center'}}>
+        <Text>R${newProfit}</Text>
       </View>
       <View style={{ flex: 2 }}>
         <View style={styles.boxOne}>
           <View style={styles.fatMeta}>
-            <Text style={styles.textFat}>Faturamento: R$25,620</Text>
+            <Text style={styles.textFat}>Faturamento: R${newAmountGain}</Text>
             <Text style={styles.textMeta}>Meta: R$6000,000</Text>
           </View>
           <View style={styles.circleDashboard}>
