@@ -1,7 +1,6 @@
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useMemo, useState } from 'react';
 import { Theme } from '../../../../themes/color';
-import { useData } from '../../../contexts/DataProvider';
 
 type Props = {
     item: any;
@@ -9,7 +8,6 @@ type Props = {
 
 
 const Items = ({ item }: Props) => {
-    const { dataBase, setDataBase } = useData();
     const
         {
             productLine,
@@ -41,14 +39,22 @@ const Items = ({ item }: Props) => {
                 <View style={styles.bodyTexts}>
                     <Text>{productLine}</Text>
                     <Text style={styles.productName}>{product}</Text>
-                    <Text>{saleId}</Text>
-                    <Text>{quantity}</Text>
+                    <Text>ID: {saleId}</Text>
+                    <Text>Un: {quantity}</Text>
                 </View>
                 <View style={styles.bodyValues}>
                     <Text>Recebido R$: {receveid}</Text>
                     <Text>Total R$: {amount}</Text>
-                    <Text>Porcentagem: {porcent}%</Text>
-                    <Text>Total Ganho R$: {totalGain}</Text>
+                    {porcent < 22 ? 
+                        (<Text>Porcentagem: {porcent}%</Text>) 
+                        : 
+                        <Text style={{color: Theme.color.errorMessage}}>Porcentagem: {porcent}%</Text>}
+
+                    {totalGain > 0 ?
+                     (<Text>Total Ganho R$: {totalGain}</Text>) 
+                     : 
+                     <Text style={{color: Theme.color.errorMessage}}>Total Ganho R$: {totalGain}</Text>
+                    } 
                     <Text style={styles.date}>{formatDate(time)}</Text>
                 </View>
             </View>
@@ -78,7 +84,7 @@ const styles = StyleSheet.create({
         fontSize: 12
     },
     productName:{
-        color: Theme.color.black,
+        color: Theme.color.white,
         opacity: 0.7
     }
 });

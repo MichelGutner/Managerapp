@@ -2,9 +2,9 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 import React from 'react';
 import { Theme } from '../../../themes/color';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { TextInputMask, TextInputMaskTypeProp } from "react-native-masked-text"
+import {FakeCurrencyInput, FakeCurrencyInputProps} from "react-native-currency-input";
 
-type Props = TextInputMaskTypeProp & {
+type Props = FakeCurrencyInputProps & {
     name: string;
     size: number;
     color: string;
@@ -15,9 +15,8 @@ type Props = TextInputMaskTypeProp & {
 const TextInputModalMask = ({ name, size, color, value, ...rest }: Props) => {
     return (
         <View style={styles.container}>
-            <TextInputMask
+            <FakeCurrencyInput
                 value={value}
-                placeholderTextColor={Theme.color.white}
                 style={{ color: Theme.color.white }}
                 {...rest}
             />

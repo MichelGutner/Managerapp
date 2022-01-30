@@ -6,6 +6,7 @@ import Auth from '@aws-amplify/auth';
 import InitialRoute from './InitialRoute';
 import Routes from './routes';
 import Home from '../pages/Home';
+import { Theme } from '../../themes/color';
 
 
 class AuthLoadingScreen extends React.Component {
@@ -58,7 +59,7 @@ class AuthLoadingScreen extends React.Component {
       if (showLoadingSpinner) {
         Page = (
           <View style={styles.container}>
-            <ActivityIndicator size="large" color="#aaa" />
+            <ActivityIndicator size="small" color={Theme.color.activity} />
           </View>
         );
       } else if (!userToken) {

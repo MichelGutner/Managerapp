@@ -5,6 +5,12 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 const DataContext = createContext({});
 const DataProvider = ({children}: any) => {
     const [dataBase, setDataBase] = useState([]);
+    const [meta, setMeta] = useState([]);
+
+    const findMeta = async () => {
+        const result = await AsyncStorageLib.getItem('dataMeta');
+        if (result !== null) setMeta(JSON.parse(result))
+    };
 
     const findData = async () => {
         const result = await AsyncStorageLib.getItem('data');
@@ -12,12 +18,12 @@ const DataProvider = ({children}: any) => {
     };
 
     useEffect(() => {
-        findData()
-
+        findData();
+        findMeta();
     }, [])
 
     return(
-        <DataContext.Provider value = {{dataBase, setDataBase, findData}}>
+        <DataContext.Provider value = {{dataBase, setDataBase, findData, meta, setMeta, findMeta}}>
             {children}
         </DataContext.Provider>
     )

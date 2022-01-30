@@ -1,6 +1,7 @@
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import Confirmation from '../components/Confirmation/Confirmation';
+import MetaDetails from '../components/metaDetails';
 import Home from '../pages/Home';
 import MercadoLivrePage from '../pages/MercadoLivre';
 import SignIn from '../pages/SignIn';
@@ -18,7 +19,7 @@ const Routes = ({ signIn, signOut }) => {
                     <Navigator
                         screenOptions={{
                             headerShown: false,
-                            cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
+                            cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
                             cardStyle: { backgroundColor: 'transparent' }
                         }}
                     >
@@ -28,9 +29,7 @@ const Routes = ({ signIn, signOut }) => {
                         </Screen>
                         <Screen name="SignUp" component={SignUp} />
                         <ContainerStack.Screen name="Confirmation" component={Confirmation} />
-                        <Screen name='Home'>
-                            {({ navigation }) => <Home signOut={signOut} navigation={navigation}/>}
-                        </Screen>
+                        <Screen name="MetaDetails" component={MetaDetails} />
                     </Navigator>
                 )}
             </ContainerStack.Screen>

@@ -1,56 +1,121 @@
+import AsyncStorageLib from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { FlatList, ScrollView, StatusBar, Text, View } from 'react-native';
-import { CircularProgressWithChild } from 'react-native-circular-progress-indicator';
-import { Theme } from '../../../themes/color';
+import { FlatList, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/AntDesign';
 import ButtonMarkets from '../../components/ButtonsMarkets';
-import Items from '../../components/Modals/inputItems';
+import InputMeta from '../../components/inputMeta';
+import MetaItems from '../../components/metaItems';
 import { useData } from '../../contexts/DataProvider';
 import MercadoLivrePage from '../MercadoLivre';
 import { styles } from './styles';
+import CircularProgress from "react-native-circular-progress-indicator";
+import { Theme } from '../../../themes/color';
 
-
-const Home = ({ signOut, navigation }) => {
+const Home = ({ signOut }) => {
+  const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
+  const [visibleInputMeta, setVisibleInputMeta] = useState(false);
   const { dataBase } = useData();
+  const { meta, setMeta } = useData();
 
-  const profit = dataBase.map((x) => x.totalGain)
-  const newProfit = profit.reduce(function(a, b){
-    return (parseFloat(a) + parseFloat(b)).toFixed(2);
-  })
-  const amountGain = dataBase.map((x) => x.amount)
-  const newAmountGain = amountGain.reduce(function(a, b){
-    return (parseFloat(a) + parseFloat(b)).toFixed(2);
-  })
+//Logic for introduct the itens in array and save on db async
+  const handleSubmit = async (metas: String) => {
+    const dataMetas = { id: Date.now(), metas, time: Date.now() };
+    const updateMeta = [...meta, dataMetas]
+    setMeta(updateMeta)
+    await AsyncStorageLib.setItem('meta', JSON.stringify(updateMeta))
+    console.log(updateMeta)
+  }
+// Logic for construct the fat and meta object
 
+  var profit = dataBase.map((x) => x.totalGain)
+  var newProfit = profit;
+  if (newProfit.length > 0)
+    var newProfit = profit.reduce((a, b) => (parseFloat(a) + parseFloat(b)).toFixed(2), 0)
+
+  var amountGain = dataBase.map((x) => x.amount)
+  var newAmountGain = amountGain;
+  if (newAmountGain.length > 0)
+    var newAmountGain = amountGain.reduce((a, b) => (parseFloat(a) + parseFloat(b)).toFixed(2), 0)
+
+// Logic for construct the circle porcentage
+  var circleMax = meta.map((c) => c.metas)
+  var newCircleMax = circleMax;
+  console.log(newCircleMax);
+
+// Logic for using a porcentage in circle
+  var porcentageCircle = newAmountGain * 100 / newCircleMax;
+  console.log(porcentageCircle)
+
+  const openData = meta => {
+    navigation.navigate('MetaDetails', { meta });
+  };
+
+  const renderItem = ({ item }) => <MetaItems onPress={() => openData(item)} item={item} />
 
   return (
     <View style={styles.container}>
-      <View style={{flex: 0, backgroundColor: Theme.color.box, height: 120, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>R${newProfit}</Text>
+      <View style={styles.profit}>
+        {newProfit >= 0 ?
+          (<Text style={styles.profitText}>R$ {newProfit}</Text>)
+          :
+          <Text style={styles.profitText2}>R$ {newProfit}{'\n'}   prejuízo</Text>}
       </View>
       <View style={{ flex: 2 }}>
+        {meta.length < 1 ?
+          (
+            <TouchableOpacity
+              style={styles.ButtonAddMeta}
+              onPress={() => setVisibleInputMeta(true)}
+            >
+              <Text style={{ marginRight: 5, fontSize: 18 }}>Adicionar Meta</Text>
+              <Icon name="pluscircle" size={25} />
+            </TouchableOpacity>
+          ) : null}
         <View style={styles.boxOne}>
           <View style={styles.fatMeta}>
-            <Text style={styles.textFat}>Faturamento: R${newAmountGain}</Text>
-            <Text style={styles.textMeta}>Meta: R$6000,000</Text>
+            <Text style={styles.textFat}>Fat: R${newAmountGain}</Text>
+            <View style={styles.textMeta}>
+              <FlatList
+                data={meta}
+                numColumns={1}
+                keyExtractor={item => item.id.toString()}
+                renderItem={renderItem}
+              />
+            </View>
           </View>
           <View style={styles.circleDashboard}>
-            <CircularProgressWithChild
-              value={30}
-              circleBackgroundColor={undefined}
-              activeStrokeColor={Theme.color.Blue}
-              radius={80}
-            />
+          <CircularProgress 
+            textStyle={{fontSize: 0.1}}
+            value={newAmountGain}
+            initialValue={0}
+            showProgressValue
+            title={porcentageCircle.toFixed(2)+'%'}
+            titleColor={porcentageCircle > 0 ? (Theme.color.Green): Theme.color.errorMessage}
+            titleStyle={{fontSize: 20, position: 'absolute', right: 134}}
+            radius={60} 
+            maxValue={newCircleMax}
+          />
           </View>
         </View>
         <ScrollView style={styles.headerButtons}>
           <ButtonMarkets onPress={() => setModalVisible(true)} title='Mercado Livre' />
-          <ButtonMarkets style={{ marginTop: 10 }} onPress={() => {}} title='Shopee' />
+          <ButtonMarkets style={{ marginTop: 10 }} onPress={() => { }} title='Shopee' />
         </ScrollView>
       </View>
+
       <MercadoLivrePage
         onClose={() => setModalVisible(false)}
-        visible={modalVisible} navigation={undefined} />
+        visible={modalVisible}
+        navigation={undefined} />
+      <InputMeta
+        onCloseMeta={() => setVisibleInputMeta(false)}
+        onSubmitMeta={handleSubmit}
+        visible={visibleInputMeta}
+        isEdit={false}
+        meta={undefined}
+      />
     </View>
 
   );

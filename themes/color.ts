@@ -1,13 +1,14 @@
 export const Theme = {
     color: {
-        background: '#FFFF',
+        background: '#FFF',
         white: '#000',
         SignIn: '#0B6490',
         errorMessage: '#FF0000',
-        box: '#D7D8DA',
-        Green: '#00FF00',
+        box: '#147FF0',
+        Green: '#7CFC00',
         Grey: '	#BEBEBE',
         Blue: '#0000FF',
-        black: '#000',
+        black: '#FFF',
+        activity: '#F39227',
     }
 }

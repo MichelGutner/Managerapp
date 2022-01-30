@@ -8,6 +8,7 @@ import AddButton from '../../addButton';
 import ButtonPage from '../../ButtonPages';
 import Input from '../../input';
 import TextInputModalMask from '../../TextInputMaskModal';
+import { FakeCurrencyInput } from "react-native-currency-input";
 
 
 type Props = ModalProps & {
@@ -99,7 +100,7 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
                         value={productLine}
                         onChangeText={text => handleChangeText(text, 'productLine')}
                         name='segment'
-                        color='white'
+                        color='black'
                         size={20}
                     />
                     <Input
@@ -108,7 +109,7 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
                         style={{ opacity: 0.3, color: Theme.color.white }}
                         onChangeText={text => handleChangeText(text, 'product')}
                         name='tag'
-                        color='white'
+                        color='black'
                         size={20}
                     />
                     <Input
@@ -118,7 +119,7 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
                         onChangeText={text => handleChangeText(text, 'saleId')}
                         keyboardType='numbers-and-punctuation'
                         name='eye'
-                        color='white'
+                        color='black'
                         size={20}
                     />
                     <Input
@@ -129,84 +130,48 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
                         style={{ opacity: 0.3, color: Theme.color.white }}
                         onChangeText={text => handleChangeText(text, 'quantity')}
                         name='buffer'
-                        color='white'
+                        color='black'
                         size={20}
                     />
-                    <TextInputModalMask
-                        type={'money'}
-                        options={{
-                            precision: 2,
-                            separator: '.',
-                            delimiter: '.',
-                            unit: '',
-                            suffixUnit: ''
-
-                        }}
+                    <Text style={styles.textHeaderInputs}>Recebido</Text>
+                    <FakeCurrencyInput
+                        style={styles.inputText}
+                        precision={2}
+                        separator=','
+                        delimiter=''
                         value={receveid}
-                        placeholder='#Valor recebido'
-                        style={{ opacity: 0.3, color: Theme.color.white }}
-                        onChangeText={text => handleChangeText(text, 'receveid')}
-                        name='cash-plus'
-                        color='white'
-                        size={20}
+                        onChangeValue={text => handleChangeText(text, 'receveid')}
                     />
-                    <TextInputModalMask
-                        type={'money'}
-                        options={{
-                            precision: 2,
-                            separator: '.',
-                            delimiter: '.',
-                            unit: '',
-                            suffixUnit: ''
-
-                        }}
+                    <Text style={styles.textHeaderInputs}>Total Venda</Text>
+                    <FakeCurrencyInput
+                        style={styles.inputText}
+                        precision={2}
+                        separator=','
+                        delimiter=''
                         value={amount}
-                        placeholder='#Valor total da venda'
-                        style={{ opacity: 0.3, color: Theme.color.white }}
-                        onChangeText={text => handleChangeText(text, 'amount')}
-                        name='cash-multiple'
-                        color='white'
-                        size={20}
+                        onChangeValue={text => handleChangeText(text, 'amount')}
                     />
-                    <TextInputModalMask
-                        type={'money'}
-                        options={{
-                            precision: 2,
-                            separator: '.',
-                            delimiter: '.',
-                            unit: '',
-                            suffixUnit: ''
-
-                        }}
+                    <Text style={styles.textHeaderInputs}>Gastos</Text>
+                    <FakeCurrencyInput
+                        style={styles.inputText}
+                        precision={2}
+                        separator=','
+                        delimiter=''
                         value={expenses}
-                        placeholder='#Gastos com a venda'
-                        style={{ opacity: 0.3, color: Theme.color.white }}
-                        onChangeText={text => handleChangeText(text, 'expenses')}
-                        name='cash-minus'
-                        color='white'
-                        size={20}
+                        onChangeValue={text => handleChangeText(text, 'expenses')}
                     />
-                    <TextInputModalMask
-                        type={'money'}
-                        options={{
-                            precision: 2,
-                            separator: '.',
-                            delimiter: '.',
-                            unit: '',
-                            suffixUnit: ''
-
-                        }}
+                    <Text style={styles.textHeaderInputs}>Custo da venda</Text>
+                    <FakeCurrencyInput
+                        style={styles.inputText}
+                        precision={2}
+                        separator=','
+                        delimiter=''
                         value={cost}
-                        placeholder='#Custo da venda'
-                        style={{ opacity: 0.3, color: Theme.color.white }}
-                        onChangeText={text => handleChangeText(text, 'cost')}
-                        name='cash-minus'
-                        color='white'
-                        size={20}
+                        onChangeValue={text => handleChangeText(text, 'cost')}
                     />
                 </View>
-                <ButtonPage 
-                    title='Cadastrar' 
+                <ButtonPage
+                    title='Cadastrar'
                     StylesContainer={styles.buttonConfirm}
                     onPress={handleSubmit}
                 />
@@ -227,11 +192,20 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginLeft: 40,
     },
-    buttonConfirm:{
+    buttonConfirm: {
         marginTop: 20,
     },
-    ButtonClose:{
+    ButtonClose: {
         marginTop: 10,
         marginLeft: 10,
+    },
+    inputText: {
+        width: 250,
+        height: 40,
+        borderBottomWidth: 0.25,
+        borderColor: Theme.color.white,
+    },
+    textHeaderInputs: {
+        marginTop: 3,
     }
 });

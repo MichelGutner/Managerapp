@@ -8,6 +8,7 @@ const width = Dimensions.get('window').width - 40
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: Theme.color.background
     },
     boxOne: {
         width: width,
@@ -31,13 +32,37 @@ export const styles = StyleSheet.create({
         fontSize: 14,
     },
     textMeta: {
-        fontSize: 14,
+        marginLeft: 10,
     },
     headerButtons: {
-        
+
     },
     headerNames: {
         fontSize: 10,
         color: Theme.color.white,
+    },
+    profit: {
+        flex: 0,
+        backgroundColor:
+            Theme.color.box,
+        height: 120,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    ButtonAddMeta: {
+        flexDirection: 'row',
+        position: 'absolute',
+        alignSelf: 'flex-end',
+        top: 60,
+        right: 40,
+    },
+    profitText: {
+        fontSize: 25,
+        color: Theme.color.Green
+    },
+    profitText2:{
+        fontSize: 25,
+        color: Theme.color.errorMessage,
+        marginTop: 10
     }
 })

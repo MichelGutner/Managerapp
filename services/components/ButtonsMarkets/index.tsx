@@ -15,7 +15,7 @@ const ButtonMarkets = ({title, ...rest}: Props) => {
     <TouchableOpacity activeOpacity={0.5}{...rest} >
         <View style={styles.container}>
             <Text style={styles.title}>{title}</Text>
-            <Icon name="right" size={18}/>
+            <Icon name="plus" size={18}/>
         </View>
     </TouchableOpacity>
   );

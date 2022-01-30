@@ -1,5 +1,7 @@
 rootProject.name = 'ProjectManager'
 include ':@react-native-async-storage_async-storage'
 project(':@react-native-async-storage_async-storage').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-async-storage/async-storage/android')
+include ':react-native-android-circles'
+project(':react-native-android-circles').projectDir = new File(settingsDir, '../node_modules/react-native-android-circles')
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'

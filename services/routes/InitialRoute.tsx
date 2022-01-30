@@ -1,18 +1,17 @@
-import { View, Text } from 'react-native';
-import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import React from 'react';
+import MetaDetails from '../components/metaDetails';
 import Home from '../pages/Home';
-import MercadoLivrePage from '../pages/MercadoLivre';
-import SignUp from '../pages/SignUp';
 
 const AppStack = createStackNavigator();
 
-const InitialRoute = ({signOut, navigation}) => {
+const InitialRoute = ({signOut}) => {
   return (
     <AppStack.Navigator screenOptions={{headerShown: false}}>
         <AppStack.Screen name="Home">
-            {() => <Home navigation={navigation} signOut={signOut} />}
+            {() => <Home signOut={signOut} />}
         </AppStack.Screen>
+        <AppStack.Screen name="MetaDetails" component={MetaDetails}/>
     </AppStack.Navigator>
   );
 };

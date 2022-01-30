@@ -20,7 +20,7 @@ export default function () {
       <DataProvider>
         <Background>
           <StatusBar
-            barStyle='dark-content'
+            barStyle='light-content'
             backgroundColor='transparent'
             translucent
           />
