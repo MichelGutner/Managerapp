@@ -38,6 +38,6 @@ const styles = StyleSheet.create({
     },
     title:{
         fontSize: 15,
-        color: Theme.color.white
+        color: Theme.color.black
     },
 });

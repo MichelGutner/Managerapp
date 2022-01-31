@@ -19,6 +19,7 @@ export const styles = StyleSheet.create({
         marginTop: 90
     },
     circleDashboard: {
+        alignItems: 'center',
         marginTop: 20,
         marginLeft: 10,
     },
@@ -29,22 +30,13 @@ export const styles = StyleSheet.create({
         marginLeft: 20,
     },
     textFat: {
-        fontSize: 14,
-    },
-    textMeta: {
-        marginLeft: 10,
-    },
-    headerButtons: {
-
-    },
-    headerNames: {
-        fontSize: 10,
-        color: Theme.color.white,
+        marginTop: 10,
+        fontSize: 17,
+        color: Theme.color.white
     },
     profit: {
         flex: 0,
-        backgroundColor:
-            Theme.color.box,
+        backgroundColor: Theme.color.box,
         height: 120,
         alignItems: 'center',
         justifyContent: 'center'
@@ -58,11 +50,11 @@ export const styles = StyleSheet.create({
     },
     profitText: {
         fontSize: 25,
-        color: Theme.color.Green
+        color: Theme.color.activity,
     },
-    profitText2:{
+    profitText2: {
         fontSize: 25,
         color: Theme.color.errorMessage,
-        marginTop: 10
+        marginTop: 10,
     }
 })

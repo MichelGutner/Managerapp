@@ -7,17 +7,16 @@ import ButtonMarkets from '../../components/ButtonsMarkets';
 import InputMeta from '../../components/inputMeta';
 import MetaItems from '../../components/metaItems';
 import { useData } from '../../contexts/DataProvider';
-import MercadoLivrePage from '../MercadoLivre';
 import { styles } from './styles';
 import CircularProgress from "react-native-circular-progress-indicator";
 import { Theme } from '../../../themes/color';
+import Items from '../../components/Modals/inputItems';
 
 const Home = ({ signOut }) => {
   const navigation = useNavigation();
-  const [modalVisible, setModalVisible] = useState(false);
   const [visibleInputMeta, setVisibleInputMeta] = useState(false);
   const { dataBase } = useData();
-  const { meta, setMeta } = useData();
+  const { meta, setMeta} = useData();
 
 //Logic for introduct the itens in array and save on db async
   const handleSubmit = async (metas: String) => {
@@ -25,7 +24,7 @@ const Home = ({ signOut }) => {
     const updateMeta = [...meta, dataMetas]
     setMeta(updateMeta)
     await AsyncStorageLib.setItem('meta', JSON.stringify(updateMeta))
-    console.log(updateMeta)
+  //  console.log(updateMeta)
   }
 // Logic for construct the fat and meta object
 
@@ -42,11 +41,11 @@ const Home = ({ signOut }) => {
 // Logic for construct the circle porcentage
   var circleMax = meta.map((c) => c.metas)
   var newCircleMax = circleMax;
-  console.log(newCircleMax);
+ // console.log(newCircleMax);
 
 // Logic for using a porcentage in circle
   var porcentageCircle = newAmountGain * 100 / newCircleMax;
-  console.log(porcentageCircle)
+ // console.log(porcentageCircle)
 
   const openData = meta => {
     navigation.navigate('MetaDetails', { meta });
@@ -60,7 +59,7 @@ const Home = ({ signOut }) => {
         {newProfit >= 0 ?
           (<Text style={styles.profitText}>R$ {newProfit}</Text>)
           :
-          <Text style={styles.profitText2}>R$ {newProfit}{'\n'}   prejuízo</Text>}
+          <Text style={styles.profitText2}>R$ {newProfit}{'\n'}prejuízo</Text>}
       </View>
       <View style={{ flex: 2 }}>
         {meta.length < 1 ?
@@ -75,8 +74,8 @@ const Home = ({ signOut }) => {
           ) : null}
         <View style={styles.boxOne}>
           <View style={styles.fatMeta}>
-            <Text style={styles.textFat}>Fat: R${newAmountGain}</Text>
-            <View style={styles.textMeta}>
+            <Text style={styles.textFat}>Fat: R$ {newAmountGain}</Text>
+            <View>
               <FlatList
                 data={meta}
                 numColumns={1}
@@ -86,29 +85,26 @@ const Home = ({ signOut }) => {
             </View>
           </View>
           <View style={styles.circleDashboard}>
-          <CircularProgress 
+          <CircularProgress
+            initialValue={0}
+            inActiveStrokeColor='white'
+            activeStrokeColor={Theme.color.activity}
+            strokeLinecap={'square'}
             textStyle={{fontSize: 0.1}}
             value={newAmountGain}
-            initialValue={0}
             showProgressValue
             title={porcentageCircle.toFixed(2)+'%'}
-            titleColor={porcentageCircle > 0 ? (Theme.color.Green): Theme.color.errorMessage}
-            titleStyle={{fontSize: 20, position: 'absolute', right: 134}}
-            radius={60} 
+            titleColor={porcentageCircle >= 0 || 'NaN' ? (Theme.color.activity): Theme.color.errorMessage}
+            titleStyle={{fontSize: 20, marginBottom: 50}}
+            radius={80} 
             maxValue={newCircleMax}
           />
           </View>
         </View>
-        <ScrollView style={styles.headerButtons}>
-          <ButtonMarkets onPress={() => setModalVisible(true)} title='Mercado Livre' />
-          <ButtonMarkets style={{ marginTop: 10 }} onPress={() => { }} title='Shopee' />
+        <ScrollView>
+          <ButtonMarkets onPress={() => navigation.navigate('Sellers')} title='Adicionar Venda' />
         </ScrollView>
       </View>
-
-      <MercadoLivrePage
-        onClose={() => setModalVisible(false)}
-        visible={modalVisible}
-        navigation={undefined} />
       <InputMeta
         onCloseMeta={() => setVisibleInputMeta(false)}
         onSubmitMeta={handleSubmit}

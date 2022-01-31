@@ -72,15 +72,15 @@ const styles = StyleSheet.create({
     },
     textConfirm: {
         fontSize: 18,
-        color: Theme.color.white,
+        color: Theme.color.black,
         alignSelf: 'center'
     },
     inputCode:{
         fontSize: 20,
         borderBottomWidth: 0.25,
-        borderColor: Theme.color.white,
+        borderColor: Theme.color.black,
         width: 90,
-        color: Theme.color.white,
+        color: Theme.color.black,
         
     }
 });

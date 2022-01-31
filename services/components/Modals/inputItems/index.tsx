@@ -16,23 +16,20 @@ const Items = ({ item }: Props) => {
             quantity,
             receveid,
             amount,
-            expenses,
-            cost,
-            time,
             porcent,
-            totalGain
+            totalGain,
+            getDate
         } = item;
 
-
-    const formatDate = ms => {
-        const date = new Date(ms)
-        const day = date.getDate();
-        const month = date.getMonth() + 1;
-        const year = date.getFullYear();
-
-        return `${day}/${month}/${year}`
-    }
-
+        const formatDate = ms => {
+            const date = new Date(ms)
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+        
+            return `${day}/${month}/${year}`
+        }
+        
     return (
         <View style={styles.container}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -55,7 +52,7 @@ const Items = ({ item }: Props) => {
                      : 
                      <Text style={{color: Theme.color.errorMessage}}>Total Ganho R$: {totalGain}</Text>
                     } 
-                    <Text style={styles.date}>{formatDate(time)}</Text>
+                    <Text style={styles.date}>{formatDate(getDate)}</Text>
                 </View>
             </View>
         </View>
@@ -68,7 +65,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         height: 109,
-        paddingHorizontal: 5,
+        paddingHorizontal: 3,
         marginRight: 10,
         marginLeft: 10,
     },
@@ -84,7 +81,7 @@ const styles = StyleSheet.create({
         fontSize: 12
     },
     productName:{
-        color: Theme.color.white,
+        color: Theme.color.black,
         opacity: 0.7
     }
 });

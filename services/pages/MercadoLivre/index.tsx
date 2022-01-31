@@ -1,33 +1,43 @@
 import AsyncStorageLib from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { FlatList, Modal, ModalProps, View } from 'react-native';
-import AddButton from '../../components/addButton';
+import { FlatList, View } from 'react-native';
+import Icon from 'react-native-vector-icons/AntDesign';
+import { Theme } from '../../../themes/color';
 import InputModal from '../../components/Modals/Input';
 import Items from '../../components/Modals/inputItems';
+import SearchBar from '../../components/Modals/modalSearchBar';
 import { useData } from '../../contexts/DataProvider';
 import { styles } from './styles';
 
-type Props = ModalProps & {
-    visible: boolean;
-    onClose: any;
-    navigation: any
-}
-
-const MercadoLivrePage = ({ visible, onClose, navigation, ...rest }: Props) => {
+const MercadoLivrePage = () => {
+    const navigation = useNavigation();
     const [modalVisible, setModalVisible] = useState(false);
-    const { dataBase, setDataBase } = useData();
+    const [searchModalOpen, setSearchModalOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const { dataBase, setDataBase, findData } = useData();
+
+    const formatDate = ms => {
+        const date = new Date(ms)
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+
+        return `${day}/${month}/${year}`
+    }
 
     const handleOnSubmit = async (
         productLine: string,
         product: string,
         saleId: string,
         quantity: number,
-        receveid: number,
-        amount: number,
-        expenses: number,
-        cost: number,
-        totalGain: number,
-        porcent: number
+        receveid: any,
+        amount: any,
+        expenses: any,
+        cost: any,
+        totalGain: any,
+        porcent: any,
+        getDate: any
     ) => {
         const data = {
             id: Date.now(),
@@ -41,6 +51,7 @@ const MercadoLivrePage = ({ visible, onClose, navigation, ...rest }: Props) => {
             cost,
             porcent: (100 - (receveid * 100 / amount)).toFixed(2),
             totalGain: (receveid - cost - expenses).toFixed(2),
+            getDate: Date.now(),
             time: Date.now()
         }
         const updateData = [...dataBase, data]
@@ -48,48 +59,85 @@ const MercadoLivrePage = ({ visible, onClose, navigation, ...rest }: Props) => {
         await AsyncStorageLib.setItem('data', JSON.stringify(updateData))
     };
 
+    console.log(dataBase.map((c) => c.getDate))
 
-    const CloseModal = () => {
-        onClose();
+    const handleOnSearch = async (text) => {
+        setSearchQuery(text);
+        if (!text.trim()) {
+            setSearchQuery('');
+            return await findData();
+        }
+        const filterData = dataBase.filter(data => {
+            if (data.product.toLowerCase().includes(text.toLowerCase())) {
+                return data;
+
+            } else if (data.saleId.toLowerCase().includes(text.toLowerCase())) {
+                return data;
+
+            } else if (data.productLine.toLowerCase().includes(text.toLowerCase())) {
+                return data;
+            }
+        })
+        if (filterData.length) {
+            setDataBase([...filterData])
+        } else {
+
+        }
     }
 
-    /**  const openDelete = dataBase => {
-           navigation.navigate('Welcome', {dataBase})
-       }*/
+    const handleClear = async () => {
+        setSearchModalOpen(false)
+        await findData();
+        setSearchQuery('');
+    }
 
     const renderItem = ({ item }) => <Items item={item} />
 
     return (
-        <Modal
-            {...rest}
-            visible={visible}
-            animationType='fade'
-        >
-            <View style={styles.container}>
-                <View style={styles.headerIcons}>
-                    <AddButton
-                        onPress={CloseModal}
-                        iconName={'arrowleft'}
-                        size={35}
-                        stylesContainer={undefined}
-                    />
-                    <AddButton
-                        onPress={() => setModalVisible(true)}
-                        iconName={'plus'}
-                        size={35}
-                        stylesContainer={undefined}
-                    />
-                </View>
-                <View>
-                    <FlatList
-                        data={dataBase}
-                        numColumns={1}
-                        keyExtractor={item => item.id.toString()}
-                        renderItem={renderItem} />
-                </View>
+        <View style={styles.container}>
+            <View style={styles.headerIcons}>
+                <Icon
+                    onPress={() => navigation.navigate('Home')}
+                    name={'arrowleft'}
+                    size={30}
+                    color={Theme.color.white}
+                />
+                <Icon
+                    onPress={() => setModalVisible(true)}
+                    name={'plus'}
+                    size={30}
+                    color={Theme.color.white}
+                    style={{ marginLeft: 136 }}
+                />
+                <Icon
+                    onPress={() => setSearchModalOpen(true)}
+                    name={'search1'}
+                    size={30}
+                    color={Theme.color.white}
+                    style={{ marginRight: 20 }}
+                />
             </View>
-            <InputModal visible={modalVisible} onClosed={() => setModalVisible(false)} onSubmit={handleOnSubmit} />
-        </Modal>
+            <FlatList
+                data={dataBase}
+                numColumns={1}
+                keyExtractor={item => item.id.toString()}
+                renderItem={renderItem}
+            />
+            <InputModal
+                visible={modalVisible}
+                onClosed={() => setModalVisible(false)}
+                onSubmit={handleOnSubmit}
+            />
+            <SearchBar
+                enabled={true}
+                onPress={() => setSearchModalOpen(false)}
+                onChangeText={handleOnSearch}
+                onClear={handleClear}
+                value={searchQuery}
+                visible={searchModalOpen}
+            />
+        </View>
+
     );
 };
 

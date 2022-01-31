@@ -9,7 +9,7 @@ type Props = ModalProps & {
 const LoadingSpinner = ({visible}: Props) => {
   return (
     <Modal visible={visible}>
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-end'}}>
             <ActivityIndicator 
                 size={'large'}
                 animating

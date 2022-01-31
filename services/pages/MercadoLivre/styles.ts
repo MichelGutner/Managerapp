@@ -7,12 +7,15 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Theme.color.background,
-        paddingBottom: 50
+        paddingBottom: 0,
     },
     headerIcons: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginLeft: 20,
+        height: 70,
+        paddingLeft: 10,
+        paddingTop: 30,
+        backgroundColor: Theme.color.box
     },
     Buttons: {
         backgroundColor: Theme.color.box,

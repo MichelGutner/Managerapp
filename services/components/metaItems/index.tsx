@@ -1,6 +1,6 @@
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React from 'react';
-import { useData } from '../../contexts/DataProvider';
+import { Theme } from '../../../themes/color';
 
 type Props = {
     item: any;
@@ -12,9 +12,20 @@ const MetaItems = ({item, onPress}: Props) => {
   return (
     <TouchableOpacity
       onPress={onPress}>
-      <Text >Meta: R$ {metas}</Text>
+      <Text style={styles.text}>Meta: R$ {metas}</Text>
     </TouchableOpacity>
   );
 };
 
 export default MetaItems;
+
+const styles = StyleSheet.create({
+  container:{
+
+  },
+  text:{
+    fontSize: 17,
+    marginTop: 10,
+    color: Theme.color.white
+  }
+})

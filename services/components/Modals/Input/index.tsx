@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import {
-    Modal, ModalProps,
-    StyleSheet, Text, View
+    Modal,
+    ModalProps,
+    Text,
+    View
 } from 'react-native';
+import { FakeCurrencyInput } from "react-native-currency-input";
 import { Theme } from '../../../../themes/color';
 import AddButton from '../../addButton';
 import ButtonPage from '../../ButtonPages';
 import Input from '../../input';
-import TextInputModalMask from '../../TextInputMaskModal';
-import { FakeCurrencyInput } from "react-native-currency-input";
+import { styles } from './styles';
+import DatePicker from "react-native-date-picker";
+import Icon from 'react-native-vector-icons/AntDesign';
 
 
 type Props = ModalProps & {
@@ -26,6 +30,7 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
     const [amount, setAmount] = useState('');
     const [expenses, setExpenses] = useState('');
     const [cost, setCost] = useState('');
+    const [getDate, setGetDate] = useState(new Date());
 
     const handleSubmit = () => {
         if (
@@ -33,10 +38,11 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
             !product.trim() &&
             !saleId.trim() &&
             !quantity.trim() &&
-            !receveid.trim() &&
+            !receveid &&
             !amount.trim() &&
             !expenses.trim() &&
-            !cost.trim())
+            !cost.trim() &&
+            !getDate)
             return onClosed();
         onSubmit(
             productLine,
@@ -46,7 +52,8 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
             receveid,
             amount,
             expenses,
-            cost
+            cost,
+            getDate
         )
         setProductLine('');
         setProduct('');
@@ -56,6 +63,7 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
         setAmount('');
         setExpenses('');
         setCost('');
+        setGetDate(getDate);
         onClosed();
     }
 
@@ -79,6 +87,7 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
         setAmount('');
         setExpenses('');
         setCost('');
+        setGetDate(getDate);
         onClosed();
     }
 
@@ -89,14 +98,14 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
                     <AddButton
                         iconName='close'
                         size={30}
-                        color={Theme.color.white}
+                        color={Theme.color.black}
                         onPress={CloseModal}
                     />
                 </View>
                 <View style={styles.inputsView}>
                     <Input
                         placeholder='#Linha do produto'
-                        style={{ opacity: 0.3, color: Theme.color.white }}
+                        style={{ opacity: 0.3, color: Theme.color.black }}
                         value={productLine}
                         onChangeText={text => handleChangeText(text, 'productLine')}
                         name='segment'
@@ -106,7 +115,7 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
                     <Input
                         value={product}
                         placeholder='#Nome produto'
-                        style={{ opacity: 0.3, color: Theme.color.white }}
+                        style={{ opacity: 0.3, color: Theme.color.black }}
                         onChangeText={text => handleChangeText(text, 'product')}
                         name='tag'
                         color='black'
@@ -115,7 +124,7 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
                     <Input
                         value={saleId}
                         placeholder='#ID da venda'
-                        style={{ opacity: 0.3, color: Theme.color.white }}
+                        style={{ opacity: 0.3, color: Theme.color.black }}
                         onChangeText={text => handleChangeText(text, 'saleId')}
                         keyboardType='numbers-and-punctuation'
                         name='eye'
@@ -127,7 +136,7 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
                         placeholder='#Quantidade'
                         maxLength={5}
                         keyboardType='numeric'
-                        style={{ opacity: 0.3, color: Theme.color.white }}
+                        style={{ opacity: 0.3, color: Theme.color.black }}
                         onChangeText={text => handleChangeText(text, 'quantity')}
                         name='buffer'
                         color='black'
@@ -182,30 +191,3 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
 };
 
 export default InputModal;
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: Theme.color.background
-    },
-    inputsView: {
-        justifyContent: 'center',
-        marginLeft: 40,
-    },
-    buttonConfirm: {
-        marginTop: 20,
-    },
-    ButtonClose: {
-        marginTop: 10,
-        marginLeft: 10,
-    },
-    inputText: {
-        width: 250,
-        height: 40,
-        borderBottomWidth: 0.25,
-        borderColor: Theme.color.white,
-    },
-    textHeaderInputs: {
-        marginTop: 3,
-    }
-});

@@ -19,7 +19,7 @@ const Routes = ({ signIn, signOut }) => {
                     <Navigator
                         screenOptions={{
                             headerShown: false,
-                            cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+                            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
                             cardStyle: { backgroundColor: 'transparent' }
                         }}
                     >
@@ -29,7 +29,6 @@ const Routes = ({ signIn, signOut }) => {
                         </Screen>
                         <Screen name="SignUp" component={SignUp} />
                         <ContainerStack.Screen name="Confirmation" component={Confirmation} />
-                        <Screen name="MetaDetails" component={MetaDetails} />
                     </Navigator>
                 )}
             </ContainerStack.Screen>

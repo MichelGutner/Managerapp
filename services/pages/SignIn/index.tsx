@@ -53,21 +53,21 @@ const SignIn = ({ navigation, signIn: signInCb }) => {
         value={email}
         onChangeText={(text) => setEmail(text)}
         placeholder='EX: email@email.com'
-        placeholderTextColor={Theme.color.white}
+        placeholderTextColor={Theme.color.black}
         name='account'
         size={25}
-        color={Theme.color.white}
+        color={Theme.color.activity}
       />
 
       <Input
         value={password}
         onChangeText={(text) => setPassword(text)}
         placeholder=''
-        placeholderTextColor={Theme.color.white}
+        placeholderTextColor={Theme.color.activity}
         secureTextEntry
         name='lock'
         size={25}
-        color={Theme.color.white}
+        color={Theme.color.activity}
       />
       <Text style={styles.errorMessage}>{errorMessage}</Text>
       {email.length > 0 ? (

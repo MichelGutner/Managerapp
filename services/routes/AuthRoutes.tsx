@@ -59,7 +59,7 @@ class AuthLoadingScreen extends React.Component {
       if (showLoadingSpinner) {
         Page = (
           <View style={styles.container}>
-            <ActivityIndicator size="small" color={Theme.color.activity} />
+            <ActivityIndicator size="large" color={Theme.color.activity} />
           </View>
         );
       } else if (!userToken) {
@@ -80,6 +80,7 @@ class AuthLoadingScreen extends React.Component {
       container:{
           flex: 1,
           alignItems: 'center',
-          justifyContent: 'center',
+          justifyContent: 'flex-end',
+          marginBottom: 20,
       }
   })

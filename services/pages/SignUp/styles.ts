@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
         right: -25,
     },
     inputText: {
-        color: Theme.color.white,
+        color: Theme.color.black,
         opacity: 0.8,
     },
     errorMessage: {

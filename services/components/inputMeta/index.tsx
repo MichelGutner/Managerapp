@@ -65,13 +65,13 @@ const InputMeta = ({ visible, onCloseMeta, onSubmitMeta, isEdit, meta }: Props) 
                     onPress={CloseModalMeta}
                     style={styles.ButtonCancel}
                 >
-                    <Text>Ola</Text>
+                    <Icon name='close' size={17} color={Theme.color.Blue} />
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={handleSubmit}
                     style={styles.buttonSave}
                 >
-                    <Icon name='sync' size={17} color={Theme.color.Blue} />
+                    <Icon name='arrowright' size={17} color={Theme.color.Blue} />
                 </TouchableOpacity>
             </View>
         </Modal>
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 210,
         left: 80,
-        shadowColor: Theme.color.white,
+        shadowColor: Theme.color.black,
         elevation: 20,
         borderRadius: 5,
         justifyContent: 'space-between',
@@ -113,8 +113,11 @@ const styles = StyleSheet.create({
     ButtonCancel: {
         width: 70,
         height: 40,
+        backgroundColor: Theme.color.white,
         borderRadius: 10,
-        borderWidth: 0.2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: 3,
     },
     viewButtons: {
         flexDirection: 'row',
@@ -126,7 +129,7 @@ const styles = StyleSheet.create({
     buttonSave: {
         width: 70,
         height: 40,
-        backgroundColor: Theme.color.black,
+        backgroundColor: Theme.color.white,
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center'

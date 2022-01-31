@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
     signUp: {
         borderRadius: 10,
         borderWidth: 0.25,
-        borderColor: Theme.color.white,
+        borderColor: Theme.color.black,
         marginTop: 20,
     }
 })

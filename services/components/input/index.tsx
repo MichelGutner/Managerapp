@@ -9,16 +9,17 @@ type Props = TextInputProps & {
     size: number;
     color: string;
     value: string;
+    stylesInput: any;
 }
 
 
-const Input = ({ name, size, color, value, ...rest }: Props) => {
+const Input = ({ name, size, color, value, stylesInput, ...rest }: Props) => {
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, stylesInput]}>
             <TextInput
                 value={value}
-                placeholderTextColor={Theme.color.white}
-                style={{ color: Theme.color.white }}
+                placeholderTextColor={Theme.color.black}
+                style={{ color: Theme.color.black }}
                 {...rest}
             />
             <Icon name={name} size={size} color={color} />
@@ -37,6 +38,6 @@ const styles = StyleSheet.create({
         width: 250,
         height: 50,
         borderBottomWidth: 0.25,
-        borderColor: Theme.color.white,
+        borderColor: Theme.color.black,
     }
 });

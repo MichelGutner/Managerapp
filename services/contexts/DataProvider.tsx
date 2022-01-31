@@ -8,13 +8,14 @@ const DataProvider = ({children}: any) => {
     const [meta, setMeta] = useState([]);
 
     const findMeta = async () => {
-        const result = await AsyncStorageLib.getItem('dataMeta');
+        const result = await AsyncStorageLib.getItem('meta');
         if (result !== null) setMeta(JSON.parse(result))
     };
 
     const findData = async () => {
         const result = await AsyncStorageLib.getItem('data');
         if(result !== null) setDataBase(JSON.parse(result))
+        console.log(result)
     };
 
     useEffect(() => {
