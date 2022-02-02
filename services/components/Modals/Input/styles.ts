@@ -9,10 +9,11 @@ export const styles = StyleSheet.create({
     },
     inputsView: {
         justifyContent: 'center',
-        marginLeft: 40,
+        marginLeft: 55,
     },
     buttonConfirm: {
-        marginTop: 20,
+        marginTop: 1,
+        marginLeft: 10,
     },
     ButtonClose: {
         flexDirection: 'row',
@@ -22,7 +23,7 @@ export const styles = StyleSheet.create({
     },
     inputText: {
         width: 250,
-        height: 40,
+        height: 35,
         borderBottomWidth: 0.25,
         borderColor: Theme.color.black,
     },

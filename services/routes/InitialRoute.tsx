@@ -2,7 +2,7 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 import React from 'react';
 import MetaDetails from '../components/metaDetails';
 import Home from '../pages/Home';
-import MercadoLivrePage from '../pages/MercadoLivre';
+import StorageDate from '../pages/StorageData';
 
 const AppStack = createStackNavigator();
 
@@ -17,7 +17,7 @@ const InitialRoute = ({ signOut }) => {
         {() => <Home signOut={signOut} />}
       </AppStack.Screen>
       <AppStack.Screen name="MetaDetails" component={MetaDetails} />
-      <AppStack.Screen name="Sellers" component={MercadoLivrePage} />
+      <AppStack.Screen name="Sellers" component={StorageDate} />
     </AppStack.Navigator>
   );
 };

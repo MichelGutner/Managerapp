@@ -1,13 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
 import { Theme } from '../../../../themes/color';
 
-type Props = {
+type Props = TouchableOpacityProps & {
     item: any;
+    selected: any;
 }
 
 
-const Items = ({ item }: Props) => {
+const Items = ({ item, selected, ...rest }: Props) => {
     const
         {
             productLine,
@@ -31,12 +32,13 @@ const Items = ({ item }: Props) => {
         }
         
     return (
-        <View style={styles.container}>
+        <TouchableOpacity activeOpacity={0.6} {...rest}>
+            <View style={styles.container}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View style={styles.bodyTexts}>
                     <Text>{productLine}</Text>
                     <Text style={styles.productName}>{product}</Text>
-                    <Text>ID: {saleId}</Text>
+                    <Text>ID:#{saleId}</Text>
                     <Text>Un: {quantity}</Text>
                 </View>
                 <View style={styles.bodyValues}>
@@ -56,6 +58,9 @@ const Items = ({ item }: Props) => {
                 </View>
             </View>
         </View>
+        {selected && (<View style={styles.overlay}/>)}
+        </TouchableOpacity>
+        
     );
 };
 
@@ -68,6 +73,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 3,
         marginRight: 10,
         marginLeft: 10,
+        overflow: 'hidden'
     },
     bodyTexts: {
         alignItems: 'flex-start',
@@ -83,5 +89,13 @@ const styles = StyleSheet.create({
     productName:{
         color: Theme.color.black,
         opacity: 0.7
+    },
+    overlay: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(255,255,255,0.7)',
+        top: 0,
+        left: 0,
     }
 });

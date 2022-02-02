@@ -15,7 +15,6 @@ const DataProvider = ({children}: any) => {
     const findData = async () => {
         const result = await AsyncStorageLib.getItem('data');
         if(result !== null) setDataBase(JSON.parse(result))
-        console.log(result)
     };
 
     useEffect(() => {

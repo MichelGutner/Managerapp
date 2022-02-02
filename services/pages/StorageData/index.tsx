@@ -10,56 +10,16 @@ import SearchBar from '../../components/Modals/modalSearchBar';
 import { useData } from '../../contexts/DataProvider';
 import { styles } from './styles';
 
-const MercadoLivrePage = () => {
+
+
+const StorageDate = () => {
     const navigation = useNavigation();
     const [modalVisible, setModalVisible] = useState(false);
     const [searchModalOpen, setSearchModalOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const { dataBase, setDataBase, findData } = useData();
+    const [selected, setSelected] = useState([]);
 
-    const formatDate = ms => {
-        const date = new Date(ms)
-        const day = date.getDate();
-        const month = date.getMonth() + 1;
-        const year = date.getFullYear();
-
-        return `${day}/${month}/${year}`
-    }
-
-    const handleOnSubmit = async (
-        productLine: string,
-        product: string,
-        saleId: string,
-        quantity: number,
-        receveid: any,
-        amount: any,
-        expenses: any,
-        cost: any,
-        totalGain: any,
-        porcent: any,
-        getDate: any
-    ) => {
-        const data = {
-            id: Date.now(),
-            productLine,
-            product,
-            saleId,
-            quantity,
-            receveid,
-            amount,
-            expenses,
-            cost,
-            porcent: (100 - (receveid * 100 / amount)).toFixed(2),
-            totalGain: (receveid - cost - expenses).toFixed(2),
-            getDate: Date.now(),
-            time: Date.now()
-        }
-        const updateData = [...dataBase, data]
-        setDataBase(updateData)
-        await AsyncStorageLib.setItem('data', JSON.stringify(updateData))
-    };
-
-    console.log(dataBase.map((c) => c.getDate))
 
     const handleOnSearch = async (text) => {
         setSearchQuery(text);
@@ -91,7 +51,37 @@ const MercadoLivrePage = () => {
         setSearchQuery('');
     }
 
-    const renderItem = ({ item }) => <Items item={item} />
+    const handleOnPress = (item) => {
+        if (selected.length) {
+            return handleLongPress(item)
+        }
+    }
+
+    const handleLongPress = (item) => {
+        if (selected.includes(item.id)) {
+            const newList = selected.filter(productId => productId !== item.id)
+            return setSelected(newList)
+        }
+        setSelected([...selected, item.id])
+    }
+    const getSelected = (item) => selected.includes(item.id)
+
+    const deselectedItems = () => setSelected([])
+
+    const deleteMultiples = () => {
+        if (!selected.length) return;
+        const newProducts = dataBase.filter((p) => !selected.includes(p.id));
+        setDataBase(newProducts);
+        deselectedItems();
+    }
+
+    const renderItem = ({ item }) =>
+        <Items
+            selected={getSelected(item)}
+            onPress={() => handleOnPress(item)}
+            onLongPress={() => handleLongPress(item)}
+            item={item}
+        />
 
     return (
         <View style={styles.container}>
@@ -101,13 +91,6 @@ const MercadoLivrePage = () => {
                     name={'arrowleft'}
                     size={30}
                     color={Theme.color.white}
-                />
-                <Icon
-                    onPress={() => setModalVisible(true)}
-                    name={'plus'}
-                    size={30}
-                    color={Theme.color.white}
-                    style={{ marginLeft: 136 }}
                 />
                 <Icon
                     onPress={() => setSearchModalOpen(true)}
@@ -123,22 +106,25 @@ const MercadoLivrePage = () => {
                 keyExtractor={item => item.id.toString()}
                 renderItem={renderItem}
             />
-            <InputModal
-                visible={modalVisible}
-                onClosed={() => setModalVisible(false)}
-                onSubmit={handleOnSubmit}
-            />
             <SearchBar
-                enabled={true}
                 onPress={() => setSearchModalOpen(false)}
                 onChangeText={handleOnSearch}
                 onClear={handleClear}
                 value={searchQuery}
                 visible={searchModalOpen}
             />
+            {selected.length ?
+                <Icon
+                    style={styles.trashIcon}
+                    onPress={deleteMultiples}
+                    name={'delete'}
+                    size={30}
+                    color={Theme.color.errorMessage}
+                /> : null
+            }
         </View>
 
     );
 };
 
-export default MercadoLivrePage;
+export default StorageDate;

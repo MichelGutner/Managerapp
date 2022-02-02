@@ -18,7 +18,7 @@ const Input = ({ name, size, color, value, stylesInput, ...rest }: Props) => {
         <View style={[styles.container, stylesInput]}>
             <TextInput
                 value={value}
-                placeholderTextColor={Theme.color.black}
+                placeholderTextColor={'rgba(0,0,0,0.3)'}
                 style={{ color: Theme.color.black }}
                 {...rest}
             />
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         width: 250,
-        height: 50,
+        height: 40,
         borderBottomWidth: 0.25,
         borderColor: Theme.color.black,
     }

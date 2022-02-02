@@ -1,9 +1,6 @@
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import Confirmation from '../components/Confirmation/Confirmation';
-import MetaDetails from '../components/metaDetails';
-import Home from '../pages/Home';
-import MercadoLivrePage from '../pages/MercadoLivre';
 import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 import Welcome from '../pages/Welcome';

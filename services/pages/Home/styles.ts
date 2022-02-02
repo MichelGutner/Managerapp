@@ -39,7 +39,8 @@ export const styles = StyleSheet.create({
         backgroundColor: Theme.color.box,
         height: 120,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        paddingTop: 20,
     },
     ButtonAddMeta: {
         flexDirection: 'row',
@@ -54,7 +55,7 @@ export const styles = StyleSheet.create({
     },
     profitText2: {
         fontSize: 25,
-        color: Theme.color.errorMessage,
+        color: 'rgba(238,0,0,0.5)',
         marginTop: 10,
     }
 })

@@ -9,11 +9,11 @@ type Props = ModalProps & {
 const LoadingSpinner = ({visible}: Props) => {
   return (
     <Modal visible={visible}>
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-end'}}>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
             <ActivityIndicator 
                 size={'large'}
                 animating
-                color={Theme.color.Green}
+                color={Theme.color.activity}
                 />
         </View>
     </Modal>

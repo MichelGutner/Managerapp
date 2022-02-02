@@ -1,4 +1,4 @@
-import { Theme } from './../../../themes/color';
+import { Theme } from '../../../themes/color';
 import { StyleSheet } from 'react-native';
 
 
@@ -22,5 +22,12 @@ export const styles = StyleSheet.create({
         marginLeft: 20,
         marginTop: 10,
         borderRadius: 20,
+    },
+    trashIcon:{
+        position: 'absolute', 
+        alignSelf: 'flex-end', 
+        top: 700, 
+        right: 20, 
+        backgroundColor: 'white' 
     }
 })

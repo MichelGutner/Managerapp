@@ -11,9 +11,14 @@ import AddButton from '../../addButton';
 import ButtonPage from '../../ButtonPages';
 import Input from '../../input';
 import { styles } from './styles';
-import DatePicker from "react-native-date-picker";
-import Icon from 'react-native-vector-icons/AntDesign';
 
+
+const updateError = (error, stateUpdater) => {
+    stateUpdater(error);
+    setTimeout(() => {
+        stateUpdater()
+    }, 3500)
+}
 
 type Props = ModalProps & {
     visible: boolean
@@ -28,11 +33,17 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
     const [quantity, setQuantity] = useState('');
     const [receveid, setReceveid] = useState('');
     const [amount, setAmount] = useState('');
-    const [expenses, setExpenses] = useState('');
     const [cost, setCost] = useState('');
     const [getDate, setGetDate] = useState(new Date());
+    const [error, setError] = useState('');
 
-    const handleSubmit = () => {
+    function handleSubmit() {
+        if (receveid.length < 1) 
+            return updateError('Preencha o campo "Valor recebido"', setError)
+        if (amount.length < 1) 
+            return updateError('Preencha o campo "Valor total de venda"', setError)
+        if (cost.length <= 1) 
+            return updateError('Preencha o campo "Custo da venda"', setError)
         if (
             !productLine.trim() &&
             !product.trim() &&
@@ -40,9 +51,9 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
             !quantity.trim() &&
             !receveid &&
             !amount.trim() &&
-            !expenses.trim() &&
             !cost.trim() &&
-            !getDate)
+            !getDate
+        )
             return onClosed();
         onSubmit(
             productLine,
@@ -51,7 +62,6 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
             quantity,
             receveid,
             amount,
-            expenses,
             cost,
             getDate
         )
@@ -61,7 +71,6 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
         setQuantity('');
         setReceveid('');
         setAmount('');
-        setExpenses('');
         setCost('');
         setGetDate(getDate);
         onClosed();
@@ -74,7 +83,6 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
         if (valueFor === 'quantity') setQuantity(text)
         if (valueFor === 'receveid') setReceveid(text)
         if (valueFor === 'amount') setAmount(text)
-        if (valueFor === 'expenses') setExpenses(text)
         if (valueFor === 'cost') setCost(text)
     }
 
@@ -85,7 +93,6 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
         setQuantity('');
         setReceveid('');
         setAmount('');
-        setExpenses('');
         setCost('');
         setGetDate(getDate);
         onClosed();
@@ -103,46 +110,46 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
                     />
                 </View>
                 <View style={styles.inputsView}>
+                <Text style={styles.textHeaderInputs}>Linha vendida</Text>
                     <Input
-                        placeholder='#Linha do produto'
-                        style={{ opacity: 0.3, color: Theme.color.black }}
+                        placeholder='#EX: Automotivos/Revisões'
                         value={productLine}
                         onChangeText={text => handleChangeText(text, 'productLine')}
                         name='segment'
                         color='black'
                         size={20}
                     />
+                    <Text style={styles.textHeaderInputs}>Produto vendido</Text>
                     <Input
                         value={product}
-                        placeholder='#Nome produto'
-                        style={{ opacity: 0.3, color: Theme.color.black }}
+                        placeholder='#EX: Kit revisão BMW 320i'
                         onChangeText={text => handleChangeText(text, 'product')}
                         name='tag'
                         color='black'
                         size={20}
                     />
+                    <Text style={styles.textHeaderInputs}>ID da venda</Text>
                     <Input
                         value={saleId}
-                        placeholder='#ID da venda'
-                        style={{ opacity: 0.3, color: Theme.color.black }}
+                        placeholder='#EX: 456655454'
                         onChangeText={text => handleChangeText(text, 'saleId')}
                         keyboardType='numbers-and-punctuation'
                         name='eye'
                         color='black'
                         size={20}
                     />
+                    <Text style={styles.textHeaderInputs}>Quantidade vendida</Text>
                     <Input
                         value={quantity}
-                        placeholder='#Quantidade'
+                        placeholder='#EX: 3'
                         maxLength={5}
                         keyboardType='numeric'
-                        style={{ opacity: 0.3, color: Theme.color.black }}
                         onChangeText={text => handleChangeText(text, 'quantity')}
                         name='buffer'
                         color='black'
                         size={20}
                     />
-                    <Text style={styles.textHeaderInputs}>Recebido</Text>
+                    <Text style={styles.textHeaderInputs}>Recebido da venda</Text>
                     <FakeCurrencyInput
                         style={styles.inputText}
                         precision={2}
@@ -151,7 +158,7 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
                         value={receveid}
                         onChangeValue={text => handleChangeText(text, 'receveid')}
                     />
-                    <Text style={styles.textHeaderInputs}>Total Venda</Text>
+                    <Text style={styles.textHeaderInputs}>Valor total da venda</Text>
                     <FakeCurrencyInput
                         style={styles.inputText}
                         precision={2}
@@ -159,15 +166,6 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
                         delimiter=''
                         value={amount}
                         onChangeValue={text => handleChangeText(text, 'amount')}
-                    />
-                    <Text style={styles.textHeaderInputs}>Gastos</Text>
-                    <FakeCurrencyInput
-                        style={styles.inputText}
-                        precision={2}
-                        separator=','
-                        delimiter=''
-                        value={expenses}
-                        onChangeValue={text => handleChangeText(text, 'expenses')}
                     />
                     <Text style={styles.textHeaderInputs}>Custo da venda</Text>
                     <FakeCurrencyInput
@@ -179,6 +177,7 @@ const InputModal = ({ visible, onClosed, onSubmit }: Props) => {
                         onChangeValue={text => handleChangeText(text, 'cost')}
                     />
                 </View>
+                <Text style={{fontSize: 15, textAlign: 'center', marginTop: 10, color: 'red'}}>{error}</Text>
                 <ButtonPage
                     title='Cadastrar'
                     StylesContainer={styles.buttonConfirm}
